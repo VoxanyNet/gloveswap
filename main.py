@@ -4,12 +4,12 @@ import os
 import webbrowser as web
 import random
 
-gui.theme('DarkBlue15')   # Add a touch of color <-- Get rid of this doc comment loser
-# All the stuff inside your window.
+gui.theme('DarkBlue15')
+
 dneFileName = ""
 customFileName = ""
 dneExists = False
-#This dictionary is used to edit the options in the combo box
+
 gloves = {
     "Broken Fang" : ["Yellow Banded","Jade","Unhinged","Needle Point"],
     "Bloodhound" : ["Snakebite","Charred","Bronzed","Guerilla"],
@@ -85,7 +85,7 @@ finishIDS = {
     "Slingshot" : 10073,
     "Big Game" : 10074,
     "Scarlet Shamagh" : 10075,
-    "Nocts" : 10076, #Doubt this is correct
+    "Nocts" : 10076, #Doubt this is correct. Lol it actually was "JAGUAR"
 
 
     #Moto
@@ -274,7 +274,6 @@ while True:
 
     # Checks values
     if path != "":
-        #layout.append([gui.Text("items_game.txt is locted at: " + str(path)])
         window["filepath_location"].update("Path to items_game.txt: " + path)
         window["step1text"].update(text_color = "#11FF33")
     else:
