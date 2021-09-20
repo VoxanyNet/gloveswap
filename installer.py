@@ -4,7 +4,27 @@ import PySimpleGUIQt as gui
 import os
 import sys
 import shutil
-from swinlnk.swinlnk import SWinLnk
+from pycrosskit import shortcuts
+import threading
+import zipfile
+
+def install(install_location,user_path):
+    os.chdir(install_location)
+    try:
+        os.mkdir("GloveSwap")
+    except FileExistsError:
+        pass
+
+    # Download and extract application and assets
+    wget.download("https://www.dropbox.com/s/fv500qn6ip4kyv8/gloveswap.zip?dl=1")
+
+    with zipfile.ZipFile("gloveswap.zip", 'r') as zip_ref:
+        zip_ref.extractall("GloveSwap")
+
+    os.remove("gloveswap.zip")
+
+    # Creates dekstop icon
+    short = shortcuts.Shortcut("GloveSwap", f"{install_location}\\GloveSwap\\main.exe", desktop = True)
 
 # Sets theme to something not ugly
 gui.theme("default1")
@@ -20,7 +40,7 @@ if os.getenv(user_path) == False:
     button_disabled = True
 
 else:
-    install_location = f"{user_path}/AppData/Local"
+    install_location = f"{user_path}\\AppData\\Roaming"
     status_element = gui.Text("Valid directory",text_color = "green", font = ('Segoe UI',10), key = "-DIRECTORY_STATUS-")
     button_disabled = False
 
@@ -52,15 +72,8 @@ while True:
             window["-INSTALL-"].update(disabled = True)
 
     if event == "-INSTALL-":
-        open(f"{install_location}\\GloveSwap")
-
-        # Download and extract application and assets
-        wget.download("http://cdn.vxny.net/gloveswap/downloads/application/gloveswap.zip",out=install_location)
-        shutil.unpack_archive(f"{install_location}/GloveSwap/gloveswap.zip", f"{install_location}/GloveSwap")
-
-        # Creates dekstop icon
-        swl = SWinLnk()
-        swl.create_lnk(f"{install_location}/GloveSwap/gloveswap.exe", f"{user_path}/Desktop")
+        thread = threading.Thread(target = install, args = (install_location,user_path))
+        thread.start()
 
     if event == "-EXIT-":
         sys.exit()
