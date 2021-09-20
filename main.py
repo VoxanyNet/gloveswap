@@ -134,7 +134,7 @@ finishIDS = {
 
 
 
-layout = [  [gui.Image("assets\title.png")],
+layout = [  [gui.Image("assets/title.png")],
             [gui.Text("Please enter path to items_game.txt located at: Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\scripts\\items  in the drive containing your CS:GO files", key = "filepath_location")],
             [gui.Text("Step 1. Enter file path for items_game.txt",key = "step1text"),gui.Input(enable_events=True, key="filepath",default_text=""), gui.FileBrowse(key="browsebutton")],
             [gui.Text("Step 2. Duplicate items_game.txt",key="step2text"), gui.Button("Create editable file",key="duplicatefile")],
