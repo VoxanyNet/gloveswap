@@ -7,24 +7,26 @@ import shutil
 from pycrosskit import shortcuts
 import threading
 import zipfile
+import asyncio
 
-def install(install_location,user_path):
-    os.chdir(install_location)
+async def install(install_location,user_path):
     try:
-        os.mkdir("GloveSwap")
+        os.mkdir(f"{install_location}/GloveSwap")
     except FileExistsError:
         pass
 
     # Download and extract application and assets
-    wget.download("https://www.dropbox.com/s/fv500qn6ip4kyv8/gloveswap.zip?dl=1")
+    wget.download("https://www.dropbox.com/s/fv500qn6ip4kyv8/application.zip?dl=1")
 
-    with zipfile.ZipFile("gloveswap.zip", 'r') as zip_ref:
+    with zipfile.ZipFile("application.zip", 'r') as zip_ref:
         zip_ref.extractall("GloveSwap")
 
-    os.remove("gloveswap.zip")
+    os.remove("application.zip")
 
     # Creates dekstop icon
     short = shortcuts.Shortcut("GloveSwap", f"{install_location}\\GloveSwap\\main.exe", desktop = True)
+
+    return True
 
 # Sets theme to something not ugly
 gui.theme("default1")
@@ -72,8 +74,9 @@ while True:
             window["-INSTALL-"].update(disabled = True)
 
     if event == "-INSTALL-":
-        thread = threading.Thread(target = install, args = (install_location,user_path))
-        thread.start()
-
+        return_value = asyncio.run(install(install_location,user_path))
+        #thread = threading.Thread(target = install, args = (install_location,user_path))
+        #thread.start()
+        print(return_value)
     if event == "-EXIT-":
         sys.exit()

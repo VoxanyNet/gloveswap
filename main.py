@@ -4,12 +4,12 @@ import os
 import webbrowser as web
 import random
 
-gui.theme('DarkBlue15')
-
+gui.theme('DarkBlue15')   # Add a touch of color <-- Get rid of this doc comment loser
+# All the stuff inside your window.
 dneFileName = ""
 customFileName = ""
 dneExists = False
-
+#This dictionary is used to edit the options in the combo box
 gloves = {
     "Broken Fang" : ["Yellow Banded","Jade","Unhinged","Needle Point"],
     "Bloodhound" : ["Snakebite","Charred","Bronzed","Guerilla"],
@@ -85,7 +85,7 @@ finishIDS = {
     "Slingshot" : 10073,
     "Big Game" : 10074,
     "Scarlet Shamagh" : 10075,
-    "Nocts" : 10076, #Doubt this is correct. Lol it actually was "JAGUAR"
+    "Nocts" : 10076, #Doubt this is correct
 
 
     #Moto
@@ -134,7 +134,7 @@ finishIDS = {
 
 
 
-layout = [  [gui.Image("assets/title.png")],
+layout = [  [gui.Image("C:\\Users\\nicks\\Documents\\Code\\Python\\ItemsGameManager\\Gloveswappng.png")],
             [gui.Text("Please enter path to items_game.txt located at: Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\scripts\\items  in the drive containing your CS:GO files", key = "filepath_location")],
             [gui.Text("Step 1. Enter file path for items_game.txt",key = "step1text"),gui.Input(enable_events=True, key="filepath",default_text=""), gui.FileBrowse(key="browsebutton")],
             [gui.Text("Step 2. Duplicate items_game.txt",key="step2text"), gui.Button("Create editable file",key="duplicatefile")],
@@ -151,7 +151,7 @@ layout = [  [gui.Image("assets/title.png")],
             [gui.Text("")],
             [gui.Text("Status: "),gui.Text("CS:GO Files Unedited", key="filestatus"), gui.Button("UNDO CHANGES",key="undo",disabled = True)],
             [gui.Text("", key = "Errors", text_color = "#FF0000")],
-            [gui.Button("Join my Discord!", key = "discord"),gui.Button("Support me on patreon!", key = "patreon"),gui.Button("HELP", key = "help")]
+            [gui.Button("Join my Discord!", key = "discord"),gui.Button("Support me on patreon!", key = "patreon"),gui.Button("View all gloves", key = "csgostash"),gui.Button("HELP", key = "help")]
 
         ]
 
@@ -201,7 +201,7 @@ def swapgloves(glove1style,glove1finish,glove2style,glove2finish):
     print("Files Swapped")
 
 # Create the Window
-window = gui.Window('GloveSwap for CS:GO Workshop', layout, icon = "assets/icon.ico")
+window = gui.Window('GloveSwap for CS:GO Workshop', layout)
 
 
 # Event Loop to process "events" and get the "values" of the inputs
@@ -268,12 +268,15 @@ while True:
         web.open("https://www.patreon.com/bonzane1")
     if event == "help":
         web.open("https://www.gloveswap.net/help")
+    if event == "csgostash":
+        web.open("https://csgostash.com/gloves")
 
 
 
 
     # Checks values
     if path != "":
+        #layout.append([gui.Text("items_game.txt is locted at: " + str(path)])
         window["filepath_location"].update("Path to items_game.txt: " + path)
         window["step1text"].update(text_color = "#11FF33")
     else:
