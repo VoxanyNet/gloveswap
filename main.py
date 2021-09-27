@@ -4,11 +4,12 @@ import os
 import webbrowser as web
 import random
 
-gui.theme('DarkBlue15')   # Add a touch of color <-- Get rid of this doc comment loser
-# All the stuff inside your window.
+gui.theme('DarkBlue15')
+
 dneFileName = ""
 customFileName = ""
 dneExists = False
+
 #This dictionary is used to edit the options in the combo box
 gloves = {
     "Broken Fang" : ["Yellow Banded","Jade","Unhinged","Needle Point"],
@@ -134,7 +135,7 @@ finishIDS = {
 
 
 
-layout = [  [gui.Image("C:\\Users\\nicks\\Documents\\Code\\Python\\ItemsGameManager\\Gloveswappng.png")],
+layout = [  [gui.Image("assets/title.png")],
             [gui.Text("Please enter path to items_game.txt located at: Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\scripts\\items  in the drive containing your CS:GO files", key = "filepath_location")],
             [gui.Text("Step 1. Enter file path for items_game.txt",key = "step1text"),gui.Input(enable_events=True, key="filepath",default_text=""), gui.FileBrowse(key="browsebutton")],
             [gui.Text("Step 2. Duplicate items_game.txt",key="step2text"), gui.Button("Create editable file",key="duplicatefile")],
@@ -201,7 +202,7 @@ def swapgloves(glove1style,glove1finish,glove2style,glove2finish):
     print("Files Swapped")
 
 # Create the Window
-window = gui.Window('GloveSwap for CS:GO Workshop', layout)
+window = gui.Window('GloveSwap for CS:GO Workshop', layout, icon="assets/icon.ico")
 
 
 # Event Loop to process "events" and get the "values" of the inputs
