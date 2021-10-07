@@ -4,7 +4,7 @@ import os
 import webbrowser as web
 import random
 
-gui.theme('DarkBlue15')
+gui.theme("SystemDefault1")
 
 dneFileName = ""
 customFileName = ""
@@ -133,8 +133,6 @@ finishIDS = {
 
 }
 
-
-
 layout = [  [gui.Image("assets/title.png")],
             [gui.Text("Please enter path to items_game.txt located at: Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\scripts\\items  in the drive containing your CS:GO files", key = "filepath_location")],
             [gui.Text("Step 1. Enter file path for items_game.txt",key = "step1text"),gui.Input(enable_events=True, key="filepath",default_text=""), gui.FileBrowse(key="browsebutton")],
@@ -155,6 +153,13 @@ layout = [  [gui.Image("assets/title.png")],
             [gui.Button("Join my Discord!", key = "discord"),gui.Button("Support me on patreon!", key = "patreon"),gui.Button("View all gloves", key = "csgostash"),gui.Button("HELP", key = "help")]
 
         ]
+
+layout = [
+    [gui.Text("GloveSwap",justification = "center",font = ("Trebuchet MS",30,"bold"))],
+    [gui.HorizontalSeparator()],
+    []
+
+]
 
 def duplicate(filepath):
     global dneFileName
