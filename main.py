@@ -3,6 +3,7 @@ import shutil
 import os
 import webbrowser as web
 import random
+import json
 
 def duplicate(filepath):
     global dneFileName
@@ -46,20 +47,33 @@ def swapgloves(glove1style,glove1finish,glove2style,glove2finish):
     #SWAP THE POSITIONS
     lines[glove1styleline],lines[glove2styleline] = lines[glove2styleline],lines[glove1styleline]
     lines[glove1finishline],lines[glove2finishline] = lines[glove2finishline],lines[glove1finishline]
-    return(lines)
     print("Files Swapped")
+    return(lines)
 
 gui.theme("SystemDefault1")
+
+# Loads glove IDs etc.
+data_file = open("data.json","r")
+data = json.load(data_file)
+
+gloves = data["gloves"]
+styleIDS = data["styleIDS"]
+finishIDS = data["finishIDS"]
+
+# Tries to find items_game.txt directory
+program_data_path = os.getenv("PROGRAMFILES(X86)")
+if os.path.exists(f"{program_data}/Steam/steamapps/common/Counter-Strike Global Offensive/csgo/scripts/items"):
+    print("Found an existing")
 
 dneFileName = ""
 customFileName = ""
 dneExists = False
 
-
+# Old layout
 layout = [
             [gui.Image("assets/title.png")],
             [gui.Text("Please enter path to items_game.txt located at: Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\scripts\\items  in the drive containing your CS:GO files", key = "filepath_location")],
-            [gui.Text("Step 1. Enter file path for items_game.txt",key = "step1text"),gui.Input(enable_events=True, key="filepath",default_text=""), gui.FileBrowse(key="browsebutton")],
+            [gui.Text("Step 1. Enter file path for items_game.txt",key = "step1text"),gui.Input(enable_events=True, key="filepath",default_text=default_file_path), gui.FileBrowse(key="browsebutton")],
             [gui.Text("Step 2. Duplicate items_game.txt",key="step2text"), gui.Button("Create editable file",key="duplicatefile")],
             [gui.Text("Step 3. Choose Items to Swap",key="step3text")],
             [gui.Text("Style: Replace "),gui.Combo(["Bloodhound","Broken Fang","Driver","Hand Wraps","Hydra","Moto","Specialist","Sport"],key = "style1",enable_events = True, readonly=True,tooltip = "Choose the glove that you have in game",default_value = "Choose Glove Type"),gui.Text(" With "),gui.Combo(["Bloodhound","Broken Fang","Driver","Hand Wraps","Hydra","Moto","Specialist","Sport"],key = "style2",enable_events = True,readonly = True,tooltip = "Choose the glove you WISH you had in game",default_value = "Choose Glove Type")],
@@ -74,21 +88,18 @@ layout = [
 
         ]
 
+# Defines the layout
 layout = [
     [gui.Text("GloveSwap",justification = "center",font = ("Trebuchet MS",30,"bold"))],
     [gui.HorizontalSeparator()],
     []
 ]
 
-# Create the Window
+# Creates the window
 window = gui.Window('GloveSwap for CS:GO Workshop', layout, icon="assets/icon.ico")
 
-
-# Event Loop to process "events" and get the "values" of the inputs
 while True:
-
     event, values = window.read()
-
 
     path = values["filepath"]
     window["Errors"].update("", text_color = "#FF0000")
